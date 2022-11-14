@@ -9,6 +9,6 @@ reference = 6.5
 
 with open('data.csv') as file:
   csvString = file.read()
-  result = task3.task(csvString)
+  result = task4.task(csvString)
   print(result == reference)
 ```
