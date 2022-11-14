@@ -41,7 +41,8 @@ def task(csvString):
   for i in graph:
     for j in graph[i]:
       out[j - 1][1] += 1
-      out[j - 1][4] += 1
+      if len(graph[i]) > 1:
+        out[j - 1][4] += 1
       if not j in r2:
         r2.append(j)
   r2.sort()
@@ -54,11 +55,20 @@ def task(csvString):
           out[j - 1][3] += 1
       for j in graph:
         if i in graph[j]:
-          out[j - 1][2] += len(graph[j])
+          out[j - 1][2] += len(graph[i])
+  for i in r2:
+    if i in graph.keys():
+      for j in graph[i]:
+        out[j - 1][3] += out[i - 1][3]
+  for i in sorted(graph.keys(), reverse=True):
+    for j in graph[i]:
+      out[i - 1][2] += out[j - 1][2]
+            
 
   #Считаем энтропию
   sum = 0
   for i in out:
+    print(i)
     for j in i:
       if j != 0:
         sum -= (j / (len(vertices) - 1)) * math.log2(j / (len(vertices) - 1))
